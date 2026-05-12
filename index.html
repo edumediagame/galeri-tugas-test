@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+    viewer.innerHTML = `<img src="${url}">`;
+  } else {
+    viewer.innerHTML = `<iframe src="${url}"></iframe>`;
+  }
+
+  modal.style.display = 'block';
+}
+
+
+document.querySelector('.close').onclick = function() {
+  closeModal();
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('modal');
+
+  if (event.target === modal) {
+    closeModal();
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  document.getElementById('viewer').innerHTML = '';
+}
+
+
+const kelasFilter = document.getElementById('kelasFilter');
+const searchInput = document.getElementById('searchInput');
+
+kelasFilter.addEventListener('change', filterData);
+searchInput.addEventListener('input', filterData);
+
+function filterData() {
+
+  const kelas = kelasFilter.value;
+  const search = searchInput.value.toLowerCase();
+
+  const filtered = allData.filter(item => {
+
+    const cocokKelas = kelas === 'all' || item.kelas === kelas;
+    const cocokNama = item.nama.toLowerCase().includes(search);
+
+    return cocokKelas && cocokNama;
+  });
+
+  renderGallery(filtered);
+}
+
+
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+loadData();
+
+</script>
+
+</body>
+</html>
